@@ -1,4 +1,4 @@
-import { IsEmail, IsString, IsNotEmpty, MinLength, MaxLength, IsBoolean, IsNumber } from 'class-validator';
+import { IsEmail, IsString, IsNotEmpty, MinLength, MaxLength, IsBoolean, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateTodoDto {
   @IsNumber()
@@ -10,9 +10,11 @@ export class CreateTodoDto {
   public title: string
 
   @IsString()
-  public description?: string
+  @IsOptional()
+  public description: string
 
   @IsBoolean()
+  @IsOptional()
   public completed: boolean
 }
 
@@ -26,8 +28,10 @@ export class UpdateTodoDto {
   public title: string
 
   @IsString()
-  public description?: string
+  @IsOptional()
+  public description: string
 
   @IsBoolean()
+  @IsOptional()
   public completed: boolean
 }
