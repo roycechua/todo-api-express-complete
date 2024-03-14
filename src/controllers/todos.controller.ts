@@ -1,10 +1,16 @@
+import { TODO_SUCCESS_MESSAGE } from '@/config/constants';
+import { TodoService } from '@/services/todos.service';
 import { NextFunction, Request, Response } from 'express';
+import Container from 'typedi';
 
 export class TodoController {
-  public getAllTodos = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public todo = Container.get(TodoService);
+
+  public getTodos = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      // get all todos from db (don't forget to add limit and offset)
-      res.status(200).json({ data: {}, message: '' })
+      // TODO: get all todos from db (don't forget to add limit and offset)
+      const todos = await this.todo.getTodos();
+      res.status(200).json({ data: todos, message: `get ${TODO_SUCCESS_MESSAGE}` });
     } catch (error) {
       next(error);
     }
@@ -12,53 +18,55 @@ export class TodoController {
 
   public getTodosByUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      // get all todos of user by id (don't forget to add limit and offset)
-      res.status(200).json({ data: {}, message: '' })
+      // TODO: get all todos of user by id (don't forget to add limit and offset)
+      const userId = Number(req.params.id);
+      const todos = await this.todo.getTodosByUser(userId);
+      res.status(200).json({ data: todos, message: `get ${TODO_SUCCESS_MESSAGE}` });
     } catch (error) {
       next(error);
     }
-  }
+  };
 
   public getTodoById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       // get specific todo by id
-      res.status(200).json({ data: {}, message: '' })
+      const todoId = Number(req.params.id);
+      const todo = await this.todo.getTodoById(todoId);
+      res.status(200).json({ data: todo, message: `get ${TODO_SUCCESS_MESSAGE}` });
     } catch (error) {
       next(error);
     }
-  }
+  };
 
   public createTodo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      // get payload from req.body
-      // create todo in db 
-      // return response data and message successful 
-      res.status(200).json({ data: {}, message: '' })
+      const body = req.body;
+      const newTodo = await this.todo.createTodo(body);
+      res.status(200).json({ data: newTodo, message: `create ${TODO_SUCCESS_MESSAGE}` });
     } catch (error) {
       next(error);
     }
-  } 
+  };
 
-   public updateTodo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public updateTodo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      // get id from req params
-      // get payload from req.body
-      // update todo in db 
-      // return response data and message successful 
-      res.status(200).json({ data: {}, message: '' })
+      const userId = Number(req.params.id);
+      const body = req.body;
+      const updatedTodo = await this.todo.updateTodo(userId, body);
+      res.status(200).json({ data: updatedTodo, message: `update ${TODO_SUCCESS_MESSAGE}` });
     } catch (error) {
       next(error);
     }
-   }
+  };
 
-    public deleteTodo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public deleteTodo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      // get id from req params
-      // delete todo in db
-      // return response data and message successful 
-      res.status(200).json({ data: {}, message: '' })
+      const userId = Number(req.params.userId);
+      const todoId = Number(req.params.todoId);
+      const deletedTodo = await this.todo.deleteTodo(userId, todoId)
+      res.status(200).json({ data: deletedTodo, message: `delete ${TODO_SUCCESS_MESSAGE}` });
     } catch (error) {
       next(error);
     }
-  } 
+  };
 }
