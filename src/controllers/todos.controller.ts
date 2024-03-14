@@ -50,9 +50,9 @@ export class TodoController {
 
   public updateTodo = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const userId = Number(req.params.id);
+      const todoId = Number(req.params.id);
       const body = req.body;
-      const updatedTodo = await this.todo.updateTodo(userId, body);
+      const updatedTodo = await this.todo.updateTodo(todoId, body);
       res.status(200).json({ data: updatedTodo, message: `update ${TODO_SUCCESS_MESSAGE}` });
     } catch (error) {
       next(error);

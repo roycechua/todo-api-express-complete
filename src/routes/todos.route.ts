@@ -17,7 +17,7 @@ export class TodoRoute implements Routes {
     this.router.get(`${this.path}`, this.todo.getTodos);
     this.router.get(`${this.path}/:id(\\d+)`, this.todo.getTodoById);
     this.router.get(`${this.path}/user/:id(\\d+)`, this.todo.getTodosByUser);
-    this.router.post(`${this.path}`, ValidationMiddleware(CreateTodoDto) , this.todo.createTodo);
+    this.router.post(`${this.path}`, ValidationMiddleware(CreateTodoDto), this.todo.createTodo);
     this.router.put(`${this.path}/:id(\\d+)`, ValidationMiddleware(UpdateTodoDto), this.todo.updateTodo);
     this.router.delete(`${this.path}/:userId(\\d+)/:todoId(\\d+)`, this.todo.deleteTodo);
   }

@@ -20,17 +20,20 @@ export class TodoService {
   }
 
   public async createTodo(todo: Todo): Promise<Todo> {
-    const newTodo = await TodosModel.query().insert(todo).returning['*'];
+    const newTodo = await TodosModel.query().insert(todo).into('todos');
     return newTodo;
   }
 
-  public async updateTodo(userId: number, todo: Todo): Promise<Todo> {
-    const updatedTodo = await TodosModel.query().update(todo).where('userId', userId).returning['*'];
+  public async updateTodo(todoId: number, todo: Todo): Promise<Todo> {
+    await TodosModel.query().update(todo).where('id', todoId).where('userId', todo.userId).into('todos');
+    const updatedTodo = await TodosModel.query().findOne({ id: todoId });
     return updatedTodo;
   }
 
   public async deleteTodo(userId: number, todoId: number): Promise<Todo> {
-    const deletedTodo = await TodosModel.query().delete().where('userId', userId).returning['*']
-    return deletedTodo
+    const deletedTodo = await TodosModel.query().findOne({ userId: userId });
+    await TodosModel.query().delete().where('userId', userId).where('id', todoId);
+
+    return deletedTodo;
   }
 }
