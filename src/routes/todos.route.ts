@@ -1,6 +1,7 @@
 import { TodoController } from '@/controllers/todos.controller';
 import { CreateTodoDto, UpdateTodoDto } from '@/dtos/todos.dto';
 import { Routes } from '@/interfaces/routes.interface';
+import { AuthMiddleware } from '@/middlewares/auth.middleware';
 import { ValidationMiddleware } from '@/middlewares/validation.middleware';
 import { Router } from 'express';
 
@@ -10,6 +11,7 @@ export class TodoRoute implements Routes {
   public todo = new TodoController();
 
   constructor() {
+    this.router.use(AuthMiddleware);
     this.initializeRoutes();
   }
 

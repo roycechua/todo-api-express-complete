@@ -4,9 +4,9 @@ Project was generated from a template from https://github.com/ljlm0402/typescrip
 
 # TODOs
 
-- [ ] JWT generation 
-- [ ] Save JWT to DB (user)
-- [ ] JWT authentication 
-- [ ] Middleware validation on all routes (except sign up) using JWT return 401
+- [x] JWT generation 
+- [x] Save JWT to DB (user)
+- [x] JWT authentication 
+- [x] Middleware validation on all routes (except sign up) using JWT return 401
 - [ ] Update the TODO APIs to stop using user ids and use token instead
 - [ ] Error handling on TODOs
